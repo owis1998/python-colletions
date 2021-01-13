@@ -1,0 +1,116 @@
+from structure import Structure
+
+class BinaryTree(Structure):
+	def __init__(self):
+		self.__root = None
+		self.__currentSize = 0
+
+	class __Node:
+		def __init__(self, data):
+			self.data = data
+			self.left = self.right = None
+
+	def getCurrentSize(self):
+		return self.__currentSize
+
+	def getRoot(self):
+		return self.__root
+
+	def isEmpty(self):
+		return self.__currentSize == 0
+
+	def removeAll(self):
+		self.__init__()
+
+	def add(self, data):
+		if data == None:
+			return False
+
+		if self.isEmpty():
+			self.__root = self.__Node(data)
+			self.__currentSize += 1
+			return
+
+		tmp = self.__root
+		while True:
+			if data < tmp.data:
+				if tmp.left == None:
+					tmp.left = self.__Node(data)
+					self.__currentSize += 1
+					return
+
+				tmp = tmp.left
+
+			else:
+				if tmp.right == None:
+					tmp.right = self.__Node(data)
+					self.__currentSize += 1
+					return
+
+				tmp = tmp.right
+
+
+	def find(self, data):
+		if self.isEmpty() or data == None:
+			return False
+
+		tmp = self.__root
+		while True:
+			if tmp == None:
+				return False
+
+			if tmp.data == data:
+				return True
+
+			if tmp.data == None:
+				tmp = tmp.left if tmp.right.data > data else tmp.right
+			else:
+				tmp = tmp.left if data < tmp.data else tmp.right
+        
+	def remove(self, data):
+		if self.isEmpty():
+			return False
+
+		if data == self.__root and self.getCurrentSize() == 1:
+			self.__init__()
+			return True
+
+		pre = None
+		tmp = self.__root
+
+		while True:
+			if tmp == None:
+				return False
+
+			if tmp.data == data:
+				if tmp.left == None and tmp.right == None:
+					if data < pre.data:
+						pre.left = None
+					else:
+						pre.right = None
+
+				elif tmp.left == None or tmp.right == None:
+					if data < pre.data and tmp.right == None:
+						pre.left = pre.left.left
+					
+					if data < pre.data and tmp.left == None:
+						pre.left = pre.left.right
+
+					if data > pre.data and tmp.right == None:
+						pre.right = pre.right.left
+
+					if data > pre.data and tmp.left == None:
+						pre.right = pre.right.right
+
+				else:
+					tmp.data = None
+
+				return True
+				self.__currentSize
+
+			pre = tmp
+			tmp = tmp.left if data < tmp.data else tmp.right
+
+
+	def replace(self, data):
+		pass
