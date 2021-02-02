@@ -46,32 +46,37 @@ class LinkedList(Structure):
 
 	def removeFirst(self):
 		if self.isEmpty():
-			return False
+			return None
 
 		if self.__head.next == None:
+			tmp = self.__head
 			self.__head = self.__tail = None
 
 		else:
+			tmp = self.__head
 			self.__head = self.__head.next
 			self.__head.previous = None
 		
 		self.__currentSize -= 1
 
-		return True
+		return tmp.data
 
 	def removeLast(self):
 		if self.isEmpty():
-			return False
+			return None
 
 		if self.__head.next == None:
+			tmp = self.__head
 			self.__head = self.__tail = None
 
 		else:
+			tmp = self.__tail
 			self.__tail = self.__tail.previous
 			self.__tail.next = None
+
 		self.__currentSize -= 1
 
-		return True
+		return tmp.data
 
 	def remove(self, data):
 		if self.isEmpty() or data == None:
@@ -147,3 +152,12 @@ class LinkedList(Structure):
 
 	def getCurrentSize(self):
 		return self.__currentSize
+
+	def getAll(self):
+		if self.getCurrentSize() == 0:
+			return None
+
+		tmp = self.__head
+		while tmp != None:
+			yield tmp.data
+			tmp = tmp.next
