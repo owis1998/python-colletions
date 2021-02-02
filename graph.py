@@ -52,14 +52,20 @@ class Graph:
 	def remove_all(self):
 		self.__adj_list = []
 
-	def get_all_vertices(self, vertex):
+	def get_all_vertices(self):
 		for ver in self.__adj_list:
-			yield ver.peekFirst()
+			yield ver
 
-	def find(self, vertex):
+	def find_vertex(self, vertex):
 		for ver in self.__adj_list:
 			if ver.peekFirst() == vertex:
 				return ver
 
+	def connected(self, ver1, ver2, dircted = False):		
+		if not dircted:
+			return self.find_vertex(ver1).find(ver2) and self.find_vertex(ver2).find(ver1)  
+		else: 
+			return self.find_vertex(ver1).find(ver2)
+			
 	def get_first(self):
 		return self.__adj_list[0]
